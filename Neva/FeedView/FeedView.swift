@@ -16,7 +16,7 @@ struct FeedView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                if viewModel.isLoading {
+                if viewModel.isLoading && viewModel.characters.isEmpty {
                     // 🔸 Skeleton for carousel
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
@@ -42,6 +42,13 @@ struct FeedView: View {
                         }
                     }
                     .padding()
+                } else if viewModel.characters.isEmpty {
+                    ContentUnavailableView(
+                        "No Characters",
+                        systemImage: "person.slash",
+                        description: Text("Pull to refresh or check your connection")
+                    )
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     CarouselView(characters: viewModel.characters)
                     
@@ -72,10 +79,22 @@ struct FeedView: View {
                     }
                 }
             }
+            .refreshable {
+                await viewModel.loadData()
+            }
             .task {
                 await viewModel.loadData()
             }
             .navigationTitle("Feeds")
+            .alert("Error", isPresented: .constant(viewModel.errorMessage != nil)) {
+                Button("OK") {
+                    // Error message will be cleared on next load
+                }
+            } message: {
+                if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                }
+            }
         }
     }
 }
