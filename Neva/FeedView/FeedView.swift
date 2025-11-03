@@ -16,31 +16,59 @@ struct FeedView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                CarouselView(characters: viewModel.characters)
-
-                LazyVGrid(columns: colums, spacing: 20) {
-                    ForEach(viewModel.characters, id: \.id) { character in
-                        NavigationLink {
-                            feedDetailsBuilder
-                                .buildFeedDetailsView(character: character)
-                        } label: {
-                            ProductCardView(character: character)
+                if viewModel.isLoading {
+                    // 🔸 Skeleton for carousel
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(0..<3, id: \.self) { _ in
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(width: 250, height: 150)
+                                    .redacted(reason: .placeholder)
+                                    .shimmer()
+                            }
                         }
-                        .buttonStyle(.plain)
+                        .padding()
                     }
-
-                }
-                .padding()
-
-                LazyVStack {
-                    ForEach(viewModel.characters, id: \.id) { character in
-                        NavigationLink {
-                            feedDetailsBuilder
-                                .buildFeedDetailsView(character: character)
-                        } label: {
-                            CharacterView(character: character)
+                    
+                    // 🔸 Skeleton for grid
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(0..<6, id: \.self) { _ in
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(height: 200)
+                                .redacted(reason: .placeholder)
+                                .shimmer()
                         }
-                        .buttonStyle(.plain)
+                    }
+                    .padding()
+                } else {
+                    CarouselView(characters: viewModel.characters)
+                    
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(viewModel.characters, id: \.id) { character in
+                            NavigationLink {
+                                feedDetailsBuilder
+                                    .buildFeedDetailsView(character: character)
+                            } label: {
+                                ProductCardView(character: character)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        
+                    }
+                    .padding()
+                    
+                    LazyVStack {
+                        ForEach(viewModel.characters, id: \.id) { character in
+                            NavigationLink {
+                                feedDetailsBuilder
+                                    .buildFeedDetailsView(character: character)
+                            } label: {
+                                CharacterView(character: character)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
                 }
             }
