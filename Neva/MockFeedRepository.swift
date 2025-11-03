@@ -31,6 +31,12 @@ class MockFeedRepository: FeedRepositoryProtocol {
                     species: "Alien",
                     image: URL(string: "https://rickandmortyapi.com/api/character/avatar/3.jpeg")
                 ),
+                CharacterResponse.init(
+                    id: 4,
+                    name: "Omar",
+                    species: "Workers",
+                    image: URL(string: "https://rickandmortyapi.com/api/character/avatar/4.jpeg")
+                )
             ]
         )
     }
