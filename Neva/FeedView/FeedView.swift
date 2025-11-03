@@ -11,7 +11,7 @@ struct FeedView: View {
 
     @State var viewModel: FeedViewModel
     @Environment(FeedDetailsBuilder.self) private var feedDetailsBuilder
-    var colums = [GridItem(.adaptive(minimum: 160), spacing: 20)]
+    var columns = [GridItem(.adaptive(minimum: 160), spacing: 20)]
     
     var body: some View {
         NavigationStack {
