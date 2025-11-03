@@ -30,8 +30,8 @@ struct CarouselCard: View {
                     .font(.title3.bold())
                     .foregroundStyle(.white)
                 
-                if let spacies = character.species, !spacies.isEmpty {
-                    Text(spacies)
+                if let species = character.species, !species.isEmpty {
+                    Text(species)
                         .font(.footnote)
                         .foregroundStyle(.white.opacity(0.85))
                 }
