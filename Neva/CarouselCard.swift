@@ -13,7 +13,7 @@ struct CarouselCard: View {
     
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            RemoteImage(url: character.image)
+            ImageLoaderView(url: character.image)
                 .frame(height: 220)
                 .clipped()
             
