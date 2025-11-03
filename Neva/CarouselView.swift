@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct CarouselView: View {
-    
+
     let characters: [CharacterResponse]
-    
+    @Environment(FeedDetailsBuilder.self) private var feedDetailsBuilder
+
     @State private var currentIndex = 0
     
     var body: some View {
@@ -20,9 +21,15 @@ struct CarouselView: View {
             } else {
                 TabView(selection: $currentIndex) {
                     ForEach(Array(characters.enumerated()), id: \.1.id) { index, character in
-                        CarouselCard(character: character)
-                            .tag(index)
-                            .padding(.horizontal)
+                        NavigationLink {
+                            feedDetailsBuilder
+                                .buildFeedDetailsView(character: character)
+                        } label: {
+                            CarouselCard(character: character)
+                        }
+                        .buttonStyle(.plain)
+                        .tag(index)
+                        .padding(.horizontal)
                     }
                 }
                 .tabViewStyle(.page(indexDisplayMode: .automatic))
@@ -35,26 +42,35 @@ struct CarouselView: View {
 }
 
 #Preview {
-    CarouselView(
-        characters: [
-            CharacterResponse(
-                id: 1,
-                name: "Obada",
-                species: "Human",
-                image: URL(string: "https://picsum.photos/600/600")
-            ),
-            CharacterResponse(
-                id: 2,
-                name: "Sara",
-                species: "Human",
-                image: URL(string: "https://picsum.photos/600/600")
-            ),
-            CharacterResponse(
-                id: 3,
-                name: "Nazli",
-                species: "Human",
-                image: URL(string: "https://picsum.photos/600/600")
-            )
-        ]
-    )
+    NavigationStack {
+        CarouselView(
+            characters: [
+                CharacterResponse(
+                    id: 1,
+                    name: "Obada",
+                    species: "Human",
+                    image: URL(string: "https://picsum.photos/600/600")
+                ),
+                CharacterResponse(
+                    id: 2,
+                    name: "Sara",
+                    species: "Human",
+                    image: URL(string: "https://picsum.photos/600/600")
+                ),
+                CharacterResponse(
+                    id: 3,
+                    name: "Nazli",
+                    species: "Human",
+                    image: URL(string: "https://picsum.photos/600/600")
+                ),
+                CharacterResponse(
+                    id: 4,
+                    name: "Omar",
+                    species: "Human",
+                    image: URL(string: "https://picsum.photos/600/600")
+                )
+            ]
+        )
+        .environment(FeedDetailsBuilder())
+    }
 }
