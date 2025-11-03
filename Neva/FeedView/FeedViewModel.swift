@@ -14,21 +14,23 @@ final class FeedViewModel {
     
     private(set) var characters: [CharacterResponse] = []
     private(set) var isLoading: Bool = false
-    
+    private(set) var errorMessage: String?
+
     init(feedUseCase: FeedUseCaseProtocol) {
         self.feedUseCase = feedUseCase
     }
-    
+
     func loadData() async {
         isLoading = true
-        
+        errorMessage = nil
+
         do {
 //            try? await Task.sleep(for: .seconds(1))
             try await fetchCharacter()
         } catch {
-            print("Error", error.localizedDescription)
+            errorMessage = error.localizedDescription
         }
-        
+
         isLoading = false
     }
     
