@@ -16,14 +16,17 @@ struct FeedDetailsView: View {
             VStack(spacing: 20) {
                 if let imageURL = viewModel.character.image {
                     ImageLoaderView(url: imageURL)
-                        .frame(height: 400)
+                        .frame(maxHeight: 400)
+                        .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .accessibilityLabel("Character image of \(viewModel.character.name)")
                 }
 
                 VStack(alignment: .leading, spacing: 16) {
                     Text(viewModel.character.name)
                         .font(.largeTitle)
                         .fontWeight(.bold)
+                        .accessibilityAddTraits(.isHeader)
 
                     if let species = viewModel.character.species {
                         HStack {
@@ -47,7 +50,9 @@ struct FeedDetailsView: View {
                 .padding()
             }
         }
-        .edgesIgnoringSafeArea(.top)
+        .ignoresSafeArea(.all, edges: .top)
+        .navigationTitle("Details")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
