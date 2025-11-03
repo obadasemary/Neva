@@ -13,17 +13,23 @@ final class FeedViewModel {
     private let feedUseCase: FeedUseCaseProtocol
     
     private(set) var characters: [CharacterResponse] = []
+    private(set) var isLoading: Bool = false
     
     init(feedUseCase: FeedUseCaseProtocol) {
         self.feedUseCase = feedUseCase
     }
     
     func loadData() async {
+        isLoading = true
+        
         do {
+//            try? await Task.sleep(for: .seconds(1))
             try await fetchCharacter()
         } catch {
             print("Error", error.localizedDescription)
         }
+        
+        isLoading = false
     }
     
     func fetchCharacter() async throws {
