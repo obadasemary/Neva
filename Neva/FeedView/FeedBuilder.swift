@@ -12,9 +12,9 @@ import SwiftUI
 final class FeedBuilder {
     
     func buildFeedView(usingMock: Bool = false) -> some View {
-        
-        var feedRepository: FeedRepositoryProtocol
-        
+
+        let feedRepository: FeedRepositoryProtocol
+
         if usingMock {
             feedRepository = MockFeedRepository()
         } else {
@@ -23,11 +23,13 @@ final class FeedBuilder {
                 networkService: networkService
             )
         }
-        
+
         let feedUseCase = FeedUseCase(
             feedRepository: feedRepository
         )
         let feedViewModel = FeedViewModel(feedUseCase: feedUseCase)
+        let detailsBuilder = FeedDetailsBuilder()
         return FeedView(viewModel: feedViewModel)
+            .environment(detailsBuilder)
     }
 }
