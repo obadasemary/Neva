@@ -1,5 +1,5 @@
 //
-//  RemoteImage.swift
+//  ImageLoaderView.swift
 //  Neva
 //
 //  Created by Abdelrahman Mohamed on 02.11.2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RemoteImage: View {
+struct ImageLoaderView: View {
     
     let url: URL?
     let imageSize: CGFloat
@@ -47,7 +47,7 @@ struct RemoteImage: View {
 }
 
 #Preview {
-    RemoteImage(
+    ImageLoaderView(
         url: URL(
             string: "https://picsum.photos/600/600"
         )
