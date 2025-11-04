@@ -25,7 +25,6 @@ final class FeedViewModel {
         errorMessage = nil
 
         do {
-//            try? await Task.sleep(for: .seconds(1))
             try await fetchCharacter()
         } catch {
             errorMessage = error.localizedDescription
@@ -42,10 +41,12 @@ final class FeedViewModel {
     }
     
     func shareFace() {
+        // TODO: Implement Facebook sharing functionality
         print("shareFaceBook")
     }
-    
+
     func tweetXTweet() {
+        // TODO: Implement X (Twitter) sharing functionality
         print("tweetX")
     }
 

@@ -35,7 +35,6 @@ extension NetworkService: NetworkServiceProtocol {
             let decodedResponse = try JSONDecoder().decode(T.self, from: data)
             return decodedResponse
         } catch {
-            print("Error decoding data:", error.localizedDescription)
             throw NetworkError.decodingError
         }
     }
