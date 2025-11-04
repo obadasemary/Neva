@@ -12,7 +12,14 @@ struct FeedView: View {
     @State var viewModel: FeedViewModel
     @Environment(FeedDetailsBuilder.self) private var feedDetailsBuilder
     var columns = [GridItem(.adaptive(minimum: 160), spacing: 20)]
-    
+
+    private var isShowingError: Binding<Bool> {
+        Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { _ in viewModel.clearError() }
+        )
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -93,10 +100,8 @@ struct FeedView: View {
                 await viewModel.loadData()
             }
             .navigationTitle("Feeds")
-            .alert("Error", isPresented: .constant(viewModel.errorMessage != nil)) {
-                Button("OK") {
-                    // Error message will be cleared on next load
-                }
+            .alert("Error", isPresented: isShowingError) {
+                Button("OK") { }
             } message: {
                 if let errorMessage = viewModel.errorMessage {
                     Text(errorMessage)
