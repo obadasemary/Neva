@@ -45,7 +45,7 @@ struct FeedView: View {
                 } else if viewModel.characters.isEmpty {
                     ContentUnavailableView(
                         "No Characters",
-                        systemImage: "person.slash",
+                        systemImage: "network.slash",
                         description: Text("Pull to refresh or check your connection")
                     )
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -72,7 +72,14 @@ struct FeedView: View {
                                 feedDetailsBuilder
                                     .buildFeedDetailsView(character: character)
                             } label: {
-                                CharacterView(character: character)
+                                CharacterView(character: character) { events in
+                                    switch events {
+                                    case .shareFacebook:
+                                        viewModel.shareFace()
+                                    case .tweetX:
+                                        viewModel.tweetXTweet()
+                                    }
+                                }
                             }
                             .buttonStyle(.plain)
                         }

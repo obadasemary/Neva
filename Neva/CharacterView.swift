@@ -10,6 +10,7 @@ import SwiftUI
 struct CharacterView: View {
     
     let character: CharacterResponse
+    let event: (CharacterViewEvents) -> Void
     
     var body: some View {
         HStack(alignment: .top) {
@@ -48,6 +49,32 @@ struct CharacterView: View {
             }
             
             Spacer()
+            
+            HStack(alignment: .bottom, spacing: 8) {
+                Button {
+                    event(.shareFacebook)
+                } label: {
+                    Image(systemName: "square.and.arrow.up.fill")
+                        .foregroundStyle(.blue)
+                        .padding()
+                        .background(Color.gray.opacity(0.5))
+                        .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                }
+                .accessibilityLabel("Share on Facebook")
+
+                Button {
+                    event(.tweetX)
+                } label: {
+                    Image(systemName: "xmark.app.fill")
+                        .foregroundStyle(.primary)
+                        .padding()
+                        .background(Color.gray.opacity(0.5))
+                        .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                }
+                .accessibilityLabel("Share on X")
+            }
         }
         .padding()
         .background {
@@ -58,6 +85,15 @@ struct CharacterView: View {
     }
 }
 
+extension CharacterView {
+    
+    enum CharacterViewEvents {
+        
+        case shareFacebook
+        case tweetX
+    }
+}
+
 #Preview {
     CharacterView(
         character: CharacterResponse(
@@ -65,6 +101,8 @@ struct CharacterView: View {
             name: "Obada",
             species: "Human",
             image: URL(string: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")
-        )
+        ), event: { _ in
+            
+        }
     )
 }

@@ -39,6 +39,13 @@ final class FeedViewModel {
         
         let response = try await feedUseCase.fetchFeed(url: url)
         characters = response.results
-        
+    }
+    
+    func shareFace() {
+        print("shareFaceBook")
+    }
+    
+    func tweetXTweet() {
+        print("tweetX")
     }
 }
