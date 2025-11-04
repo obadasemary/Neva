@@ -23,9 +23,7 @@ func testCharacterData() {
     let viewModel = FeedDetailsViewModel(character: character)
 
     // Then
-    #expect(viewModel.character.id == 1)
-    #expect(viewModel.character.name == "Rick Sanchez")
-    #expect(viewModel.character.species == "Human")
+    #expect(viewModel.character == character)
 }
 
 @Test("FeedDetailsViewModel stores complete character information")
@@ -43,10 +41,7 @@ func testCompleteCharacterInfo() {
     let viewModel = FeedDetailsViewModel(character: character)
 
     // Then
-    #expect(viewModel.character.id == 42)
-    #expect(viewModel.character.name == "Morty Smith")
-    #expect(viewModel.character.species == "Human")
-    #expect(viewModel.character.image == imageURL)
+    #expect(viewModel.character == character)
 }
 
 @Test("FeedDetailsViewModel handles optional species")
@@ -63,6 +58,5 @@ func testOptionalSpecies() {
     let viewModel = FeedDetailsViewModel(character: character)
 
     // Then
-    #expect(viewModel.character.species == nil)
-    #expect(viewModel.character.name == "Unknown Character")
+    #expect(viewModel.character == character)
 }

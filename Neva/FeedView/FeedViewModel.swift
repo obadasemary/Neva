@@ -48,4 +48,8 @@ final class FeedViewModel {
     func tweetXTweet() {
         print("tweetX")
     }
+
+    func clearError() {
+        errorMessage = nil
+    }
 }
